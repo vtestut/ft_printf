@@ -6,7 +6,7 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 12:00:35 by vtestut           #+#    #+#             */
-/*   Updated: 2022/11/29 19:39:49 by vtestut          ###   ########.fr       */
+/*   Updated: 2022/11/29 21:56:06 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+
+typedef struct s_list
+{
+		int len;
+		int size;
+}	t_list;
 
 int		ft_printf(const char *str, ...);
 

@@ -43,8 +43,6 @@ CFLAGS			= -Wall -Wextra -Werror
 ###########################################################
 #### RULES
 
-EXEC = prog
-
 all : $(NAME)
 
 $(NAME): $(LIB) $(OBJS)
@@ -69,10 +67,18 @@ fclean: clean
 re: fclean
 	$(MAKE)
 
+del: fclean
+	rm a.out
+
+test: 
+	@ $(CC) srcs/*.c $(NAME) && ./a.out | cat -e
+
+full_test: fclean all test
+
 norm:
 	@norminette $(PATH_SRCS) $(INCLUDES)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re del test full_test
 
 # variables spéciales
 # $@ fait référence au nom de la cible
