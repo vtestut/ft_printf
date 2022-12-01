@@ -6,7 +6,7 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 11:57:16 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/01 16:53:03 by vtestut          ###   ########.fr       */
+/*   Updated: 2022/12/01 16:59:43 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void ft_char_convertor(va_list args, t_struc *struc)
 {
 	char c;
 
-	c = va_arg(args, char);
+	c = va_arg(args, int);
 	ft_putchar(c);
 	struc->len += 1;
 }
