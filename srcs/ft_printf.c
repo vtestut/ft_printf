@@ -6,7 +6,7 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 11:57:16 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/01 16:59:43 by vtestut          ###   ########.fr       */
+/*   Updated: 2022/12/01 17:06:12 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,11 @@ static const char *search_convertor(va_list args, const char *str, t_struc *stru
 		ft_int_convertor(args, struc);
 	// if (*str == 'u')
 	// if (*str == 'x' || *str == 'X')
-	// if (*str == '%')
+	if (*str == '%')
+	{
+		write(1, "%", 1);
+		struc->len += 1;
+	}
 	return (str + 1);
 }
 
@@ -135,8 +139,8 @@ int	main(void)
 	// int test2 = ft_printf("\nMYPRINTF = Salut | %d | ca va?\n", -123);
 	// printf("\nLEPRINTF = %d\nMYPRINTF = %d\n", test1, test2);
 	/**********************************************************************/
-	int test1 = printf("LEPRINTF = Salut %s tu as %d ans %c\n", "Virgile", 30, '!');
-	int test2 = ft_printf("MYPRINTF = Salut %s tu as %d ans %c\n", "Virgile", 30, '!');
+	int test1 = printf("LEPRINTF = Salut %s tu as %d ans %c %%\n", "Virgile", 30, '!');
+	int test2 = ft_printf("MYPRINTF = Salut %s tu as %d ans %c %%\n", "Virgile", 30, '!');
 	printf("\nLEPRINTF = %d\nMYPRINTF = %d\n", test1, test2);
 	/**********************************************************************/
 	//int i;
