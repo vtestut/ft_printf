@@ -6,21 +6,11 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 11:57:16 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/01 17:06:12 by vtestut          ###   ########.fr       */
+/*   Updated: 2022/12/03 16:49:55 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-// parcourrir et print les char de ma string jusqu'a tomber sur " % "
-// si % -> identifier le convertor qui suit
-// emvoyer l'argument vers le bon converteur et le print
-
-// typedef struct s_list
-// {
-// 		int len;				// valeur de retour
-// 		int size;				// variable temporaire
-// }				t_list;
 
 static int ft_intlen(int n)
 {
@@ -39,6 +29,62 @@ static int ft_intlen(int n)
 		len++;
 	}
 	return (len + sign);
+}
+
+static size_t ft_longlen(size_t n)
+{
+	int len;
+
+	if (!n)
+		return (0);
+	len = 0;
+	while (n != 0)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+static void	ft_putlong(size_t nb)
+{
+	if (nb >= 10)
+	{
+		ft_putlong(nb / 10);
+	}
+	ft_putchar((nb % 10) + '0');
+}
+
+// int ft_putstrhex(char *str)
+// {
+// 	int len = 0;
+// 	while (*str)
+// 	{
+// 		ft_putchar(*str);
+// 		str++;
+// 		len++;
+// 	}
+// 	return (len);
+// }
+
+static void ft_puthexa(size_t nb)
+{
+	char tab[] = "0123456789abcdef";
+
+	if (nb >= 16)
+	{
+		ft_puthexa(nb / 16);
+	}
+	ft_putchar(tab[(nb % 16)]);
+}
+
+static void ft_hexa_convertor(va_list args, t_struc *struc)
+{
+	size_t x;
+
+	x = va_arg(args, size_t);
+	ft_puthexa(x);
+	struc->len += x;
 }
 
 static void ft_int_convertor(va_list args, t_struc *struc)
@@ -68,6 +114,15 @@ static void ft_char_convertor(va_list args, t_struc *struc)
 	struc->len += 1;
 }
 
+static void ft_unsigned_convertor(va_list args, t_struc *struc)
+{
+	size_t u;
+
+	u = va_arg(args, size_t);
+	ft_putlong(u);
+	struc->len += (int)ft_longlen(u);
+}
+
 static const char *read_and_write_text(t_struc *struc, const char *str)
 {
 	char 	*next;
@@ -93,8 +148,12 @@ static const char *search_convertor(va_list args, const char *str, t_struc *stru
 	// if (*str == 'p')
 	if (*str == 'd' || *str == 'i')
 		ft_int_convertor(args, struc);
-	// if (*str == 'u')
-	// if (*str == 'x' || *str == 'X')
+	if (*str == 'u')
+		ft_unsigned_convertor(args, struc);
+	if (*str == 'x')
+		ft_hexa_convertor(args, struc);
+	// if (*str == 'X')
+	// 	ft_hexamaj_convertor(args, struc);	
 	if (*str == '%')
 	{
 		write(1, "%", 1);
@@ -106,8 +165,7 @@ static const char *search_convertor(va_list args, const char *str, t_struc *stru
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
-	t_struc	struc; // structure pour stocker les tailles et les valeurs de retour
-
+	t_struc	struc;
 	va_start(args, str);
 	struc.len = 0;
 	struc.size = 0;
@@ -121,7 +179,7 @@ int	ft_printf(const char *str, ...)
 	{
 		if (*str == '%') 
 		{
-			str = search_convertor(args, str + 1, &struc); // on envoie le carac d'apres le %
+			str = search_convertor(args, str + 1, &struc);
 		}
 		else
 			str = read_and_write_text(&struc, str);
@@ -132,15 +190,10 @@ int	ft_printf(const char *str, ...)
 
 int	main(void)
 {
-	
 
 	/**********************************************************************/
-	// int test1 = printf("\nLEPRINTF = Salut | %d | ca va?\n", -123);
-	// int test2 = ft_printf("\nMYPRINTF = Salut | %d | ca va?\n", -123);
-	// printf("\nLEPRINTF = %d\nMYPRINTF = %d\n", test1, test2);
-	/**********************************************************************/
-	int test1 = printf("LEPRINTF = Salut %s tu as %d ans %c %%\n", "Virgile", 30, '!');
-	int test2 = ft_printf("MYPRINTF = Salut %s tu as %d ans %c %%\n", "Virgile", 30, '!');
+	int test1 = printf("LEPRINTF = print %x\n", 3123354456);
+	int test2 = ft_printf("MYPRINTF = print %x\n", 3123354456);
 	printf("\nLEPRINTF = %d\nMYPRINTF = %d\n", test1, test2);
 	/**********************************************************************/
 	//int i;

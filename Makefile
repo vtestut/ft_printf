@@ -39,7 +39,7 @@ HEADER			= includes/ft_printf.h
 #### COMPILATION
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -Wall -Wextra #-Werror
 
 ###########################################################
 #### RULES
