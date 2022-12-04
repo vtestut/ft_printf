@@ -6,7 +6,7 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 11:57:16 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/03 16:49:55 by vtestut          ###   ########.fr       */
+/*   Updated: 2022/12/04 16:21:37 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,36 +55,48 @@ static void	ft_putlong(size_t nb)
 	ft_putchar((nb % 10) + '0');
 }
 
-// int ft_putstrhex(char *str)
-// {
-// 	int len = 0;
-// 	while (*str)
-// 	{
-// 		ft_putchar(*str);
-// 		str++;
-// 		len++;
-// 	}
-// 	return (len);
-// }
-
-static void ft_puthexa(size_t nb)
+static size_t ft_puthexamaj(size_t nb)
 {
-	char tab[] = "0123456789abcdef";
+    char tab[] = "0123456789ABCDEF";
+    size_t len = 0;
 
-	if (nb >= 16)
-	{
-		ft_puthexa(nb / 16);
-	}
-	ft_putchar(tab[(nb % 16)]);
+    if (nb >= 16)
+    {
+        len += ft_puthexamaj(nb / 16);
+    }
+    ft_putchar(tab[(nb % 16)]);
+    len++;
+    return (len);
+}
+
+static void ft_hexamaj_convertor(va_list args, t_struc *struc)
+{
+    size_t x;
+
+    x = va_arg(args, size_t);
+    struc->len += ft_puthexamaj(x);
+}
+
+static size_t ft_puthexa(size_t nb)
+{
+    char tab[] = "0123456789abcdef";
+    size_t len = 0;
+
+    if (nb >= 16)
+    {
+        len += ft_puthexa(nb / 16);
+    }
+    ft_putchar(tab[(nb % 16)]);
+    len++;
+    return (len);
 }
 
 static void ft_hexa_convertor(va_list args, t_struc *struc)
 {
-	size_t x;
+    size_t x;
 
-	x = va_arg(args, size_t);
-	ft_puthexa(x);
-	struc->len += x;
+    x = va_arg(args, size_t);
+    struc->len += ft_puthexa(x);
 }
 
 static void ft_int_convertor(va_list args, t_struc *struc)
@@ -100,7 +112,7 @@ static void ft_str_convertor(va_list args, t_struc *struc)
 {
 	char *s;
 
-	s = va_arg(args, char *);
+	s = va_arg(args, char *); // protect against NULL ptr
 	ft_putstr(s);
 	struc->len += (int)ft_strlen(s);
 }
@@ -123,13 +135,22 @@ static void ft_unsigned_convertor(va_list args, t_struc *struc)
 	struc->len += (int)ft_longlen(u);
 }
 
+static void ft_ptr_convertor(va_list args, t_struc *struc)
+{
+	unsigned long p;
+
+	p = va_arg(args, unsigned long);
+	write(1, "0x", 2);
+    struc->len += ft_puthexa(p) + 2;
+}
+
 static const char *read_and_write_text(t_struc *struc, const char *str)
 {
-	char 	*next;
+	char 	*ptr;
 	
-	next = ft_strchr(str, '%');
-	if (next != NULL)
-		struc->size = next - str;
+	ptr = ft_strchr(str, '%');
+	if (ptr != NULL)
+		struc->size = ptr - str;
 	else
 		struc->size = (int)ft_strlen(str);
 	write(1, str, struc->size);
@@ -143,21 +164,31 @@ static const char *search_convertor(va_list args, const char *str, t_struc *stru
 {
 	if (*str == 'c')
 		ft_char_convertor(args, struc);
-	if (*str == 's')
+	else if (*str == 's')
 		ft_str_convertor(args, struc);
-	// if (*str == 'p')
-	if (*str == 'd' || *str == 'i')
+	else if (*str == 'p')
+		ft_ptr_convertor(args, struc);
+	else if (*str == 'd' || *str == 'i')
 		ft_int_convertor(args, struc);
-	if (*str == 'u')
+	else if (*str == 'u')
 		ft_unsigned_convertor(args, struc);
-	if (*str == 'x')
+	else if (*str == 'x')
 		ft_hexa_convertor(args, struc);
-	// if (*str == 'X')
-	// 	ft_hexamaj_convertor(args, struc);	
-	if (*str == '%')
+	else if (*str == 'X')
+		ft_hexamaj_convertor(args, struc);	
+	else if (*str == '%')
 	{
 		write(1, "%", 1);
 		struc->len += 1;
+	}
+	// else
+	// {
+	// 	write(1, "%", 1);
+	// 	write(1, &(*str), 1);
+	// }
+	else
+	{	printf("FT_SEARCH_CONV / STR == %s", str);
+		//check_other(str);
 	}
 	return (str + 1);
 }
@@ -190,18 +221,11 @@ int	ft_printf(const char *str, ...)
 
 int	main(void)
 {
+	char tab[] = "lol";
+	char *ptr = tab;
 
-	/**********************************************************************/
-	int test1 = printf("LEPRINTF = print %x\n", 3123354456);
-	int test2 = ft_printf("MYPRINTF = print %x\n", 3123354456);
+	int test1 = printf("LEPRINTF = print %k   %p\n", ptr);
+	int test2 = ft_printf("MYPRINTF = print %k   %p\n", ptr);
 	printf("\nLEPRINTF = %d\nMYPRINTF = %d\n", test1, test2);
-	/**********************************************************************/
-	//int i;
-	// printf("Nombre d'arguments passes au programme : %d\n", argc);
-	// for (i = 0; i < argc; i++)
-	// {
-	// 	printf(" argv[%d] --->  %s\n", i, argv[i]);
-	// 	//ft_printf(" argv[%d] --->  %s\n", i, argv[i]);
-	// }
 	return (0);
 }
