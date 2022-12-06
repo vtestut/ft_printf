@@ -12,7 +12,8 @@ PATH_SRCS 		+= srcs/
 #### SOURCES
 
 SRCS			+=	ft_printf.c
-#SRCS			+=	ft_print_connvertors.c
+SRCS			+=	ft_printf_utils.c
+SRCS			+=	ft_printf_hexa_utils.c
 
 vpath %.c $(PATH_SRCS)
 
@@ -25,7 +26,7 @@ OBJS			= $(patsubst %.c, $(PATH_OBJS)/%.o, $(SRCS))
 ###########################################################
 #### LIBRARY
 
-LIBFT_PATH 		= A.Libft/
+LIBFT_PATH 		= Libft/
 LIBFT 			= $(LIBFT_PATH)/libft.a
 
 ###########################################################
@@ -39,7 +40,7 @@ HEADER			= includes/ft_printf.h
 #### COMPILATION
 
 CC				= cc
-CFLAGS			= -Wall -Wextra #-Werror
+CFLAGS			= -Wall -Wextra -Werror
 
 ###########################################################
 #### RULES
