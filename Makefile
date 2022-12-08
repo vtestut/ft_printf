@@ -46,25 +46,27 @@ CFLAGS			= -Wall -Wextra -Werror
 #### RULES
 
 all : $(NAME)
+	@ echo "\n	Makefile terminé :-)\n\n	Type <make help> to see more options\n"
 
 $(NAME): $(LIBFT) $(OBJS)
 	cp $(LIBFT) $(NAME)
-	ar rcs $(NAME) $(OBJS)
+	@ ar rcs $(NAME) $(OBJS)
 
 $(LIBFT):
-	$(MAKE) -sC $(LIBFT_PATH)
+	@ $(MAKE) -sC $(LIBFT_PATH)
 
 $(OBJS): $(PATH_OBJS)/%.o: %.c $(HEADER)
-	@mkdir -p $(PATH_OBJS)
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES) -I $(INCLUDES_LIB)
+	@ mkdir -p $(PATH_OBJS)
+	@ $(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES) -I $(INCLUDES_LIB)
 
 clean:
-	$(RM) -R $(PATH_OBJS)
-	$(MAKE) -sC $(LIBFT_PATH) clean
+	@ $(RM) -R $(PATH_OBJS)
+	@ $(MAKE) -sC $(LIBFT_PATH) clean
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) -sC $(LIBFT_PATH) fclean
+	@ $(RM) $(NAME)
+	@ $(MAKE) -sC $(LIBFT_PATH) fclean
+	@ echo "\n	fclean terminé\n"
 
 re: fclean
 	$(MAKE)
@@ -75,12 +77,18 @@ del: fclean
 test: 
 	@ $(CC) srcs/*.c $(NAME) && ./a.out | cat -e
 
-full_test: fclean all test
+full_test: del all test
 
-norm:
+no:
 	@norminette $(PATH_SRCS) $(INCLUDES)
 
-.PHONY: all clean fclean re del test full_test
+help:
+	@echo "\n	make no		> pour lancer la norminette"
+	@echo "	make test	> pour creer un executable et l'exectuer (a.out)"
+	@echo "	make del	> pour lancer fclean ET supprimer l'exectuable"
+	@echo "	make full_test	> pour lancer del > all > test\n"
+
+.PHONY: all clean fclean re del test full_test no help
 
 # variables spéciales
 # $@ fait référence au nom de la cible
@@ -89,4 +97,3 @@ norm:
 # $? liste dépendance plus récentes que la cible
 # $* nom fichier, sans son extension
 # CIBLE > DEPENDANCES > REGLES
-

@@ -6,13 +6,13 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:33:26 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/05 19:32:23 by vtestut          ###   ########.fr       */
+/*   Updated: 2022/12/07 17:51:50 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putlong(unsigned long nb)
+void	ft_putlong(unsigned int nb)
 {
 	if (nb >= 10)
 	{

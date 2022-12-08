@@ -6,7 +6,7 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 11:57:16 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/06 19:05:37 by vtestut          ###   ########.fr       */
+/*   Updated: 2022/12/07 17:57:35 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ static const char	*read_and_write_text(t_struc *struc, const char *str)
 
 static const char	*search_conv(va_list args, const char *str, t_struc *struc)
 {
-	size_t size;
-	unsigned int x;
-
-	size = 0;
 	if (*str == 'c')
 		ft_char_convertor(args, struc);
 	else if (*str == 's')
@@ -45,14 +41,9 @@ static const char	*search_conv(va_list args, const char *str, t_struc *struc)
 	else if (*str == 'u')
 		ft_unsigned_convertor(args, struc);
 	else if (*str == 'x')
-	{
-		x = va_arg(args, unsigned int);
-		size = ft_hexalen(x);
-		ft_hexa_convertor(x, size);
-		struc->len += (int)size;
-	}
+		ft_hexa_convertor(args, struc);
 	else if (*str == 'X')
-		ft_hexamaj_convertor(args, struc);
+		ft_upperhexa_convertor(args, struc);
 	else if (*str == '%')
 	{
 		write(1, "%", 1);
@@ -84,12 +75,4 @@ int	ft_printf(const char *str, ...)
 	}
 	va_end(args);
 	return (struc.len);
-}
-
-int main()
-{
-	int test1 = printf("LEPRINTF %x \n", 9);
-	int test2 = ft_printf("MYPRINTF %x \n", 9);
-	printf("LEPRINTF = %d\nMYPRINTF = %d\n", test1, test2);
-	return 0;
 }

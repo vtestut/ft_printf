@@ -6,7 +6,7 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:22:02 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/05 19:32:38 by vtestut          ###   ########.fr       */
+/*   Updated: 2022/12/07 18:02:51 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_tolower(int c);
 
 size_t	ft_strlen(const char *s);
 int		ft_intlen(int n);
-size_t	ft_longlen(size_t n);
+int		ft_longlen(unsigned int n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -59,7 +59,7 @@ char	**ft_split(char const *s, char c);
 void	ft_putchar(char c);
 void	ft_putstr(char *str);
 void	ft_putnbr(int nb);
-void	ft_putlong(unsigned long nb);
+void	ft_putlong(unsigned int nb);
 
 /***	MEMORY	********************************************************/
 

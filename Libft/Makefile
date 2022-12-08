@@ -97,14 +97,14 @@ AR = ar rcs
 
 all: $(NAME)
 
-bonus: $(NAME)
+#bonus: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $@ $^
+	@ $(AR) $@ $^
 
 $(OBJS): $(PATH_OBJS)/%.o: %.c $(HEADER)
-	@mkdir -p $(PATH_OBJS)
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES)
+	@ mkdir -p $(PATH_OBJS)
+	@ $(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES)
 
 clean:
 	 $(RM) -R $(PATH_OBJS)
