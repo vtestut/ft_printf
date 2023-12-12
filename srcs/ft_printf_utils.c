@@ -6,7 +6,7 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:05:31 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/07 17:53:46 by vtestut          ###   ########.fr       */
+/*   Updated: 2023/12/12 19:00:38 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,3 +83,4 @@ void	ft_ptr_convertor(va_list args, t_struc *struc)
 		write(1, "0x", 2);
 	struc->len += ft_put_ptr((unsigned long)p) + 2;
 }
+ 

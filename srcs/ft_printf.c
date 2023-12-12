@@ -6,12 +6,12 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 11:57:16 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/07 17:57:35 by vtestut          ###   ########.fr       */
+/*   Updated: 2023/12/12 19:00:42 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
+ 
 static const char	*read_and_write_text(t_struc *struc, const char *str)
 {
 	char	*ptr;

@@ -6,12 +6,12 @@
 /*   By: vtestut <vtestut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:18:59 by vtestut           #+#    #+#             */
-/*   Updated: 2022/12/07 18:03:05 by vtestut          ###   ########.fr       */
+/*   Updated: 2023/12/12 19:00:44 by vtestut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
+ 
 int	ft_put_hexa(unsigned int nb)
 {
 	const char	tab[] = "0123456789abcdef";
